@@ -1,0 +1,96 @@
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
+import { useDemoData } from '@mui/x-data-grid-generator';
+import { darken, lighten } from '@mui/material/styles';
+
+const getBackgroundColor = (color: string, mode: string) =>
+  mode === 'dark' ? darken(color, 0.6) : lighten(color, 0.6);
+
+const getHoverBackgroundColor = (color: string, mode: string) =>
+  mode === 'dark' ? darken(color, 0.5) : lighten(color, 0.5);
+
+
+const rows: GridRowsProp = [
+  { id: 1, Stream: '8.3.0.2', BuildNo: '7', TestType: "Cypress", DeploymentType:"Docker", Platform:"Linux/DB", Browser:"hello", OPServerName:"hello", OPURL:"hello", status:"green",Comments:"hello" },
+  { id: 2, Stream: 'Hello', BuildNo: 'World', TestType: "hello", DeploymentType:"hello", Platform:"hell",Browser:"hello", OPServerName:"hello", OPURL:"hello", status:"yellow",Comments:"hello" },
+  { id: 3, Stream: 'Hello', BuildNo: 'World', TestType: "hello", DeploymentType:"hello", Platform:"hell",Browser:"hello", OPServerName:"hello", OPURL:"hello", status:"red",Comments:"hello" },
+  { id: 4, Stream: 'Hello', BuildNo: 'World', TestType: "hello", DeploymentType:"hello", Platform:"hell",Browser:"hello", OPServerName:"hello", OPURL:"hello", status:"blue",Comments:"hello" },
+  { id: 5, Stream: 'Hello', BuildNo: 'World', TestType: "hello", DeploymentType:"hello", Platform:"hell",Browser:"hello", OPServerName:"hello", OPURL:"hello", status:"hello",Comments:"hello" },
+  { id: 6, Stream: 'Hello', BuildNo: 'World', TestType: "hello", DeploymentType:"hello", Platform:"hell",Browser:"hello", OPServerName:"hello", OPURL:"hello", status:"hello",Comments:"hello" },
+];
+  
+const columns: GridColDef[] = [
+  { field: 'Stream', headerName: 'Stream', width: 150 },
+  { field: 'BuildNo', headerName: 'Build No.', width: 150 },
+  { field: 'TestType', headerName: 'Test Type', width: 150 },
+  { field: 'DeploymentType', headerName: 'Deployment Type', width: 150 },
+  { field: 'Platform', headerName: 'Platform', width: 150 },
+  { field: 'Browser', headerName: 'Browser', width: 150 },
+  { field: 'OPServerName', headerName: 'OP Server Name', width: 150 },
+  { field: 'OPURL', headerName: 'OP URL', width: 150 },
+  { field: 'status', headerName: 'Status', width: 150 },
+  { field: 'Comments', headerName: 'Comments', width: 150 },
+  
+
+];
+
+
+export default function StylingRowsGrid() {
+  const { data } = useDemoData({
+    dataSet: 'Commodity',
+    rowLength: 100,
+  });
+
+  return (
+    <Box
+      sx={{
+        height: 400,
+        width: '100%',
+        '& .super-app-theme--blue': {
+          bgcolor: (theme) =>
+            getBackgroundColor(theme.palette.info.main, theme.palette.mode),
+          '&:hover': {
+            bgcolor: (theme) =>
+              getHoverBackgroundColor(theme.palette.info.main, theme.palette.mode),
+          },
+        },
+        '& .super-app-theme--green': {
+          bgcolor: (theme) =>
+            getBackgroundColor(theme.palette.success.main, theme.palette.mode),
+          '&:hover': {
+            bgcolor: (theme) =>
+              getHoverBackgroundColor(
+                theme.palette.success.main,
+                theme.palette.mode,
+              ),
+          },
+        },
+        '& .super-app-theme--yellow': {
+          bgcolor: (theme) =>
+            getBackgroundColor(theme.palette.warning.main, theme.palette.mode),
+          '&:hover': {
+            bgcolor: (theme) =>
+              getHoverBackgroundColor(
+                theme.palette.warning.main,
+                theme.palette.mode,
+              ),
+          },
+        },
+        '& .super-app-theme--red': {
+          bgcolor: (theme) =>
+            getBackgroundColor(theme.palette.error.main, theme.palette.mode),
+          '&:hover': {
+            bgcolor: (theme) =>
+              getHoverBackgroundColor(theme.palette.error.main, theme.palette.mode),
+          },
+        },
+      }}
+    >
+      <DataGrid
+        rows={rows} columns={columns}
+        getRowClassName={(params) => `super-app-theme--${params.row.status}`}
+      />
+    </Box>
+  );
+}
